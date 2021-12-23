@@ -16950,6 +16950,8 @@ with pkgs;
 
   hydra-check = with python3.pkgs; toPythonApplication hydra-check;
 
+  hydrapaper = callPackage ../applications/misc/hydrapaper {};
+
   hyena = callPackage ../development/libraries/hyena { };
 
   hyperscan = callPackage ../development/libraries/hyperscan { };
