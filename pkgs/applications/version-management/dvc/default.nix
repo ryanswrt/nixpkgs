@@ -2,7 +2,7 @@
 , python3
 , fetchFromGitHub
 , fetchpatch
-, enableGoogle ? false
+  # , enableGoogle ? false - just add dvc-gs instead
 , enableAWS ? false
 , enableAzure ? false
 , enableSSH ? false
@@ -29,64 +29,51 @@ python3.pkgs.buildPythonApplication rec {
       --subst-var-by dvc "$out/bin/dcv"
   '';
 
-  nativeBuildInputs = with python3.pkgs; [
-    setuptools-scm
-  ];
+  nativeBuildInputs = with python3.pkgs; [ setuptools-scm ];
 
-  propagatedBuildInputs = with python3.pkgs; [
-    appdirs
-    colorama
-    configobj
-    distro
-    dpath
-    dvclive
-    dvc-data
-    dvc-http
-    dvc-render
-    dvc-studio-client
-    dvc-task
-    flatten-dict
-    flufl_lock
-    funcy
-    grandalf
-    hydra-core
-    iterative-telemetry
-    networkx
-    packaging
-    pathspec
-    psutil
-    pydot
-    pygtrie
-    pyparsing
-    requests
-    rich
-    ruamel-yaml
-    scmrepo
-    shortuuid
-    shtab
-    tabulate
-    tomlkit
-    tqdm
-    typing-extensions
-    voluptuous
-    zc_lockfile
-  ] ++ lib.optionals enableGoogle [
-    gcsfs
-    google-cloud-storage
-  ] ++ lib.optionals enableAWS [
-    aiobotocore
-    boto3
-    s3fs
-  ] ++ lib.optionals enableAzure [
-    azure-identity
-    knack
-  ] ++ lib.optionals enableSSH [
-    bcrypt
-  ] ++ lib.optionals (pythonOlder "3.8") [
-    importlib-metadata
-  ] ++ lib.optionals (pythonOlder "3.9") [
-    importlib-resources
-  ];
+  propagatedBuildInputs = with python3.pkgs;
+    [
+      appdirs
+      colorama
+      configobj
+      distro
+      dpath
+      dvclive
+      dvc-data
+      dvc-http
+      dvc-render
+      dvc-studio-client
+      dvc-task
+      flatten-dict
+      flufl_lock
+      funcy
+      grandalf
+      hydra-core
+      iterative-telemetry
+      networkx
+      packaging
+      pathspec
+      psutil
+      pydot
+      pygtrie
+      pyparsing
+      requests
+      rich
+      ruamel-yaml
+      scmrepo
+      shortuuid
+      shtab
+      tabulate
+      tomlkit
+      tqdm
+      typing-extensions
+      voluptuous
+      zc_lockfile
+    ] ++ lib.optionals enableAWS [ aiobotocore boto3 s3fs ]
+    ++ lib.optionals enableAzure [ azure-identity knack ]
+    ++ lib.optionals enableSSH [ bcrypt ]
+    ++ lib.optionals (pythonOlder "3.8") [ importlib-metadata ]
+    ++ lib.optionals (pythonOlder "3.9") [ importlib-resources ];
 
   # Tests require access to real cloud services
   doCheck = false;

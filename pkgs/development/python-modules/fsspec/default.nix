@@ -14,7 +14,7 @@
 , smbprotocol
 , tqdm
 
-# optionals
+  # optionals
 , adlfs
 , dask
 , distributed
@@ -31,7 +31,7 @@
 
 buildPythonPackage rec {
   pname = "fsspec";
-  version = "2022.10.0";
+  version = "2022.11.0";
   format = "setuptools";
 
   disabled = pythonOlder "3.7";
@@ -40,93 +40,41 @@ buildPythonPackage rec {
     owner = "fsspec";
     repo = "filesystem_spec";
     rev = version;
-    hash = "sha256-+lPt/zqI3Mkt+QRNXq+Dxm3h/ryZJsfrmayVi/BTtbg=";
+    hash = "sha256-rh3sTP7MZSI3mH/D9XnjXm8xYg4l7Elf7adj9+3Y8jo=";
   };
 
-  propagatedBuildInputs = [
-    aiohttp
-    paramiko
-    requests
-    smbprotocol
-    tqdm
-  ];
+  propagatedBuildInputs = [ aiohttp paramiko requests smbprotocol tqdm ];
 
   passthru.optional-dependencies = {
-    entrypoints = [
-    ];
-    abfs = [
-      adlfs
-    ];
-    adl = [
-      adlfs
-    ];
-    dask = [
-      dask
-      distributed
-    ];
+    entrypoints = [ ];
+    abfs = [ adlfs ];
+    adl = [ adlfs ];
+    dask = [ dask distributed ];
     dropbox = [
       # missing dropboxdrivefs
       requests
       dropbox
     ];
-    gcs = [
-      gcsfs
-    ];
-    git = [
-      pygit2
-    ];
-    github = [
-      requests
-    ];
-    gs = [
-      gcsfs
-    ];
-    hdfs = [
-      pyarrow
-    ];
-    arrow = [
-      pyarrow
-    ];
-    http = [
-      aiohttp
-      requests
-    ];
-    sftp = [
-      paramiko
-    ];
-    s3 = [
-      s3fs
-    ];
-    oci = [
-      ocifs
-    ];
-    smb = [
-      smbprotocol
-    ];
-    ssh = [
-      paramiko
-    ];
-    fuse = [
-      fusepy
-    ];
-    libarchive = [
-      libarchive-c
-    ];
-    gui = [
-      panel
-    ];
-    tqdm = [
-      tqdm
-    ];
+    gcs = [ gcsfs ];
+    git = [ pygit2 ];
+    github = [ requests ];
+    gs = [ gcsfs ];
+    hdfs = [ pyarrow ];
+    arrow = [ pyarrow ];
+    http = [ aiohttp requests ];
+    sftp = [ paramiko ];
+    s3 = [ s3fs ];
+    oci = [ ocifs ];
+    smb = [ smbprotocol ];
+    ssh = [ paramiko ];
+    fuse = [ fusepy ];
+    libarchive = [ libarchive-c ];
+    gui = [ panel ];
+    tqdm = [ tqdm ];
   };
 
-  nativeCheckInputs = [
-    numpy
-    pytest-asyncio
-    pytest-mock
-    pytest-vcr
-    pytestCheckHook
-  ];
+  nativeCheckInputs =
+    [ numpy pytest-asyncio pytest-mock pytest-vcr pytestCheckHook ];
 
   __darwinAllowLocalNetworking = true;
 
@@ -145,14 +93,13 @@ buildPythonPackage rec {
     "test_touch"
   ];
 
-  pythonImportsCheck = [
-    "fsspec"
-  ];
+  pythonImportsCheck = [ "fsspec" ];
 
   meta = with lib; {
     description = "A specification that Python filesystems should adhere to";
     homepage = "https://github.com/fsspec/filesystem_spec";
-    changelog = "https://github.com/fsspec/filesystem_spec/raw/${version}/docs/source/changelog.rst";
+    changelog =
+      "https://github.com/fsspec/filesystem_spec/raw/${version}/docs/source/changelog.rst";
     license = licenses.bsd3;
     maintainers = with maintainers; [ costrouc ];
   };
